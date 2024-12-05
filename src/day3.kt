@@ -4,7 +4,7 @@ import kotlin.math.abs
 
 
 fun day3_1() {
-    val input = {}.javaClass.getResource("inputFiles/day3/test")?.readText() ?: "?"
+    val input = {}.javaClass.getResource("inputFiles/day3/real")?.readText() ?: "?"
 
     println(input)
 

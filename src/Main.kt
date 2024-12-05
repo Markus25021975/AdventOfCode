@@ -2,7 +2,7 @@ fun main() {
     println("Main");
 
 
-    day6_1()
+    day5_1()
 
 
 
