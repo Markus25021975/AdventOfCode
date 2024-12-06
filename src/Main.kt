@@ -1,8 +1,8 @@
 fun main() {
-    println("Main");
+    println("Main")
 
 
-    day5_1()
+    day6_2()
 
 
 
