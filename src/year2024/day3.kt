@@ -1,6 +1,4 @@
-
-
-import kotlin.math.abs
+package year2024
 
 
 fun day3_1() {

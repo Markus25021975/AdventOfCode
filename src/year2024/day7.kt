@@ -1,3 +1,5 @@
+package year2024
+
 import java.math.BigInteger
 
 fun day7_1() {

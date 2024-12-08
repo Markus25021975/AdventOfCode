@@ -1,3 +1,9 @@
+package year2024
+
+import minus
+import plus
+import times
+
 fun day6_1(matrix: List<List<Char>>): Pair<MutableSet<Pair<Int, Int>>, Boolean> {
 
     val barriers = mutableSetOf<Pair<Int, Int>>()
@@ -44,14 +50,7 @@ fun day6_1(matrix: List<List<Char>>): Pair<MutableSet<Pair<Int, Int>>, Boolean> 
     return Pair(visited, false)
 }
 
-operator fun Pair<Int, Int>.plus(other: Pair<Int, Int>): Pair<Int, Int> =
-    Pair(first + other.first, second + other.second)
 
-operator fun Pair<Int, Int>.minus(other: Pair<Int, Int>): Pair<Int, Int> =
-    Pair(first - other.first, second - other.second)
-
-operator fun Pair<Int, Int>.times(other: Pair<Int, Int>): Pair<Int, Int> =
-    Pair(first * other.first - second * other.second, first * other.second + second * other.first)
 
 fun day6_2() {
     val input = {}.javaClass.getResource("inputFiles/day6/real")?.readText() ?: "?"

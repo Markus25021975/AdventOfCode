@@ -1,4 +1,4 @@
-
+package year2024
 
 fun day1_1() {
     val input = {}.javaClass.getResource("inputFiles/day1/real")?.readText() ?: "?"

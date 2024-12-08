@@ -1,3 +1,5 @@
+package year2024
+
 import kotlin.math.abs
 
 

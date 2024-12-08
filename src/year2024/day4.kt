@@ -1,4 +1,4 @@
-
+package year2024
 
 fun day4_1() {
     val input = {}.javaClass.getResource("inputFiles/day4/real" +
