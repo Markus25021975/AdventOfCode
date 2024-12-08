@@ -5,10 +5,11 @@ import plus
 import times
 
 fun day8() {
-    val input = {}.javaClass.getResource("inputFiles/day8/real")?.readText() ?: "?"
+    val input = {}.javaClass.getResource("inputFiles/day8/test")?.readText() ?: "?"
 
     val matrix = input.lines().map { it.toList() }
     val antisPart1 = mutableSetOf<Pair<Int, Int>>()
+    // val antisPart1 = matrix.mapIndexed { indexY, chars -> chars.mapIndexedNotNull { indexX, c -> if (c == '#') { Pair(indexX, indexY) } else { null } } }.flatten().toMutableSet()
     val antennas = mutableMapOf<Char, MutableList<Pair<Int, Int>>>()
 
     for (y in matrix.indices) {
