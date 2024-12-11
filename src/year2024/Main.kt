@@ -4,7 +4,8 @@ fun main() {
 
     println("Main")
 
-    Day11.part1()
+
+    day12()
 
 }
 

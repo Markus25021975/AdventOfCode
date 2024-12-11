@@ -18,6 +18,8 @@ object Day10 {
             }
         }
 
+        // var old = input.flatMapIndexed { y, line -> line.mapIndexedNotNull { x, _ -> if (input[y][x] == 0) listOf(Pair(x, y)) else null }}.toMutableList()
+
         fun getNeighbours(p: Pair<Int, Int>) =
             setOf(Pair(-1, 0), Pair(1, 0), Pair(0, 1), Pair(0, -1)).mapNotNull { dir ->
                 if (listOf((p + dir).first, (p + dir).second).all { it in input.indices }) {
@@ -26,7 +28,6 @@ object Day10 {
                     null
                 }
             }.toSet()
-
 
         fun Pair<Int, Int>.isOneHigher(other: Pair<Int, Int>) =
             input[this.second][this.first] == 1 + input[other.second][other.first]

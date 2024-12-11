@@ -8,13 +8,13 @@ fun day2_1() {
 
     println(input.lines())
 
-    val l0 = input.lines().map { it.split(" ")}.filter { jt -> jt.distinct().size == jt.size }
+    val l0 = input.lines().map { it.split(" ") }.filter { jt -> jt.distinct().size == jt.size }
 
     val l1 = l0.map { it.map { jt -> jt.toInt() } }.filter { kt -> kt in listOf(kt.sorted(), kt.sortedDescending()) }
 
-    val l2 = l1.map { it.zipWithNext() }.map { jt -> jt.map { abs(it.first - it.second ) } }
+    val l2 = l1.map { it.zipWithNext() }.map { jt -> jt.map { abs(it.first - it.second) } }
 
-    val l3 = l2.filter { it.all { jt -> jt in listOf(1,2,3)} }.size
+    val l3 = l2.filter { it.all { jt -> jt in listOf(1, 2, 3) } }.size
 
     println(l0)
     println(l1)
@@ -22,10 +22,11 @@ fun day2_1() {
     println(l3)
 
 }
- fun safe(l:  List<Int>) : Boolean {
-    if(l.size == l.distinct().size){
-        if(l in listOf(l.sorted(), l.sortedDescending())){
-            val ll = l.zipWithNext().map { abs(it.first - it.second) }.all { jt -> jt in listOf(1,2,3) }
+
+fun safe(l: List<Int>): Boolean {
+    if (l.size == l.distinct().size) {
+        if (l in listOf(l.sorted(), l.sortedDescending())) {
+            val ll = l.zipWithNext().map { abs(it.first - it.second) }.all { jt -> jt in listOf(1, 2, 3) }
             return ll
         }
     }
@@ -37,17 +38,17 @@ fun day2_2() {
 
     println(input.lines())
 
-    val l0 = input.lines().map { it.split(" ")}
+    val l0 = input.lines().map { it.split(" ") }
     val l1 = l0.map { it.map { jt -> jt.toInt() } }
 
     val l2 = l1.map { it ->
-       val l = mutableListOf<List<Int>>()
-        it.forEachIndexed { index, _ -> l.add(it.filterIndexed { index2, _ -> index != index2  }) }
+        val l = mutableListOf<List<Int>>()
+        it.forEachIndexed { index, _ -> l.add(it.filterIndexed { index2, _ -> index != index2 }) }
         // it.forEach { jt -> l.add(it.filter { jt != it }) }
         l
     }
 
-    l2.forEach { it.forEach { jt -> println(safe(jt) )} }
+    l2.forEach { it.forEach { jt -> println(safe(jt)) } }
 
     val l3 = l2.map { it.map { jt -> safe(jt) } }
 
