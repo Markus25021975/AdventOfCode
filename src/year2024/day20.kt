@@ -1,7 +1,6 @@
 package year2024
 
 import plus
-import times
 import kotlin.math.abs
 
 fun day20() {
