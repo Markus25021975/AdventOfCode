@@ -6,7 +6,7 @@ fun main() {
 
 
 
-    day21()
+    day22()
 
 
 
