@@ -29,6 +29,7 @@ fun day23() {
 
     var old = threeConnected.toMutableSet()
     val new = mutableSetOf<Set<String>>()
+    // takes some hours
     while (true) {
         old.forEachIndexed { index, connected ->
             println("$index ${old.size}")

@@ -1,4 +1,6 @@
-package year2024
+package year2025
+
+
 
 fun main() {
 
@@ -6,9 +8,8 @@ fun main() {
 
 
 
-    day24()
+    day3()
 
 
 
 }
-
