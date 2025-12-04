@@ -1,12 +1,11 @@
 package year2025
 
-import plus
+import getNeighbourPoints
+
 
 fun day4() {
     val input = {}.javaClass.getResource("inputFiles/day4/real")?.readText() ?: "?"
-
     val matrix = input.lines().map { it.toList() }
-    matrix.forEach { println(it) }
     val grid = matrix.withIndex().flatMap { (y, row) ->
         row.withIndex().map { (x, char) -> (x to y) to char }
     }.toMap().toMutableMap()
@@ -35,17 +34,5 @@ fun day4() {
 
 }
 
-fun Map<Pair<Int, Int>, Char>.getNeighbourPoints(point: Pair<Int, Int>): List<Pair<Int, Int>> {
-    if (point !in keys) return emptyList()
-    return listOf(
-        point + Pair(0, 1),
-        point + Pair(0, -1),
-        point + Pair(1, 0),
-        point + Pair(-1, 0),
-        point + Pair(1, 1),
-        point + Pair(1, -1),
-        point + Pair(-1, 1),
-        point + Pair(-1, -1)
-    ).filter { it in keys }
 
-}
+
