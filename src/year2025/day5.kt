@@ -1,8 +1,5 @@
 package year2025
 
-import getNeighbourPoints
-
-
 fun day5() {
 
     val input = {}.javaClass.getResource("inputFiles/day5/real")?.readText() ?: "?"
