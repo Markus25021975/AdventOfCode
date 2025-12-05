@@ -8,7 +8,7 @@ fun main() {
 
 
 
-    day3()
+    day5()
 
 
 
