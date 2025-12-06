@@ -4,11 +4,11 @@ package year2025
 
 fun main() {
 
-    println("Main")
+    println("Main 2025")
 
 
 
-    day5()
+    day6()
 
 
 
