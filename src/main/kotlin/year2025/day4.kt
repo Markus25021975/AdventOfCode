@@ -1,10 +1,12 @@
 package year2025
 
 import getNeighbourPoints
+import readInput
 
 
 fun day4() {
-    val input = {}.javaClass.getResource("inputFiles/day4/real")?.readText() ?: "?"
+    val input = readInput("2025", "day4", "real")
+    println(input)
     val matrix = input.lines().map { it.toList() }
     val grid = matrix.withIndex().flatMap { (y, row) ->
         row.withIndex().map { (x, char) -> (x to y) to char }

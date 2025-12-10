@@ -4,7 +4,7 @@ package year2024
 fun day23() {
 
     val input =
-        ({}.javaClass.getResource("inputFiles/day23/real")?.readText() ?: "?").lines().map { it.split("-").toSet() }
+        ({}.javaClass.getResource("2025/inputFiles/day23/real")?.readText() ?: "?").lines().map { it.split("-").toSet() }
             .toSet()
 
     val threeConnected = mutableSetOf<Set<String>>()

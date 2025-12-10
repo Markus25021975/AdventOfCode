@@ -6,7 +6,6 @@ fun main() {
 
 
 
-    day25()
 
 
 

@@ -1,14 +1,16 @@
 package year2025
 
+import readInput
+
 fun day6() {
 
-    val input = {}.javaClass.getResource("inputFiles/day6/test")?.readText() ?: "?"
+    val input = readInput("2025", "day6", "real")
 
     println(input)
 
     val l1 = input.lines()
 
-    println("l1 $l1")
+    println("l1  $l1")
 
     val ops = l1.last().split(" ").filter { it.isNotBlank()}
 

@@ -1,7 +1,13 @@
 package year2025
 
+import com.google.ortools.Loader
+import com.google.ortools.linearsolver.MPSolver
+import readInput
+import kotlin.text.toInt
+
 fun day10() {
-    val input = {}.javaClass.getResource("inputFiles/day10/test")?.readText() ?: "?"
+
+    val input = readInput("2025", "day10", "real")
 
     val l1 = input.lines()
 
@@ -23,9 +29,6 @@ fun day10() {
         regexVoltages.find(it)?.groupValues?.get(1)?.split(",")?.map { it.toInt() } ?: emptyList()
     }
 
-    charGoals.forEach { println(it) }
-    buttonsList.forEach { println(it) }
-    voltageGoals.forEach { println(it) }
 
     data class Button(
         val aktConfig: List<Char>,
@@ -39,21 +42,6 @@ fun day10() {
             if (index in this) if (c == '#') '.' else '#' else c
         }
     }
-
-    fun List<Int>.applyToVoltage(config: List<Int>): List<Int> {
-        return config.mapIndexed { index, i ->
-            if (index in this) i + 1 else i
-        }
-    }
-
-    // Tests
-    println("Test")
-    println((listOf(0, 2).applyTo(listOf('.', '.', '.', '.'))))
-    println((listOf(0, 2).applyTo(listOf(0, 2).applyTo(listOf('.', '.', '.', '.')))))
-
-    println(listOf(0, 2).applyToVoltage(listOf(0, 0, 0, 0)))
-    println(listOf(0, 2).applyToVoltage(listOf(0, 2).applyToVoltage(listOf(0, 0, 0, 0))))
-
 
     fun getminDeepCharGoals(goal: List<Char>, buttons: List<List<Int>>): Int {
         val initialConfig = List(goal.size) { '.' }
@@ -93,79 +81,63 @@ fun day10() {
         return minDeep
     }
 
-
-
-    charGoals.forEachIndexed { index, goal ->
-        println(
-            "Goal $index: $goal = ${
-                getminDeepCharGoals(
-                    goal,
-                    buttonsList[index]
-                )
-            }"
-        )
-    }
     charGoals.mapIndexed { index, goal -> getminDeepCharGoals(goal, buttonsList[index]) }.sum()
-        .also { println("Sum: $it") }
+        .also { println("day10_1: $it") }
 
 
-    val charGoalTest = ".####..#..".map { it }
-    val buttonsTest = listOf(
-        listOf(6, 7, 9),
-        listOf(1, 4, 6, 7, 8),
-        listOf(1, 2, 3, 5, 6, 7),
-        listOf(4, 5, 7),
-        listOf(1, 9),
-        listOf(6, 7),
-        listOf(0, 1, 2, 4, 5, 7, 9),
-        listOf(1, 3, 4, 5, 6, 7, 9),
-        listOf(1, 2, 5, 6, 8, 9),
-        listOf(0, 2, 4, 5, 6, 8, 9),
-        listOf(0, 2, 4, 5, 6, 7, 8, 9),
-        listOf(0, 2, 3, 4, 6, 7, 8),
-        listOf(0, 1, 2, 3, 4, 7, 8, 9)
-    )
-    val voltagesTest = listOf(64, 68, 82, 53, 82, 69, 85, 121, 51, 77)
-
-    fun toBinaryMatrix(lists: List<List<Int>>, size: Int): List<List<Int>> =
-        lists.map { indices ->
-            List(size) { i -> if (i in indices) 1 else 0 }
-        }
-
-    val matrix = toBinaryMatrix(buttonsTest, 10)
-    matrix.forEach { println(it) }
-
-
-    // matrix: List<List<Int>>, voltagesTest: List<Int>
-    fun solveBruteForce(matrix: List<List<Int>>, voltages: List<Int>, maxPress: Int = 10): List<Int>? {
-        val n = matrix.size
-        val m = voltages.size
-
-        fun isSolution(x: List<Int>): Boolean {
-            val result = List(m) { j ->
-                matrix.indices.sumOf { i -> matrix[i][j] * x[i] }
+    fun toBinaryMatrix(lists: List<List<Int>>, size: Int): List<List<Int>> {
+        val matrix = Array(size) { MutableList(lists.size) { 0 } }
+        lists.forEachIndexed { col, indices ->
+            indices.forEach { row ->
+                matrix[row][col] = 1
             }
-            return result == voltages
         }
-
-        fun search(x: List<Int>, idx: Int): List<Int>? {
-            if (idx == n) return if (isSolution(x)) x else null
-            for (v in 0..maxPress) {
-                val res = search(x + v, idx + 1)
-                if (res != null) return res
-            }
-            return null
-        }
-
-        return search(emptyList(), 0)
+        return matrix.map { it.toList() }
     }
 
-// Beispielaufruf:
-    val solution = solveBruteForce(matrix, voltagesTest)
-    println("Lösung: $solution")
+    fun solveWithORTools(matrix: List<List<Int>>, voltages: List<Int>, maxPress: Int = 1000): List<Int>? {
+        Loader.loadNativeLibraries()
+        val numRows = matrix.size
+        val numCols = if (matrix.isNotEmpty()) matrix[0].size else 0
+        val solver = MPSolver.createSolver("SCIP") ?: return null
+
+        // x: Anzahl der Tastendrücke pro Button (entspricht Spaltenanzahl)
+        val x = Array(numCols) { solver.makeIntVar(0.0, maxPress.toDouble(), "x$it") }
+
+        // Jede Zeile (Licht) muss die Zielspannung erreichen
+        for (row in 0 until numRows) {
+            val ct = solver.makeConstraint(voltages[row].toDouble(), voltages[row].toDouble())
+            for (col in 0 until numCols) {
+                ct.setCoefficient(x[col], matrix[row][col].toDouble())
+            }
+        }
+
+        val objective = solver.objective()
+        for (i in 0 until numCols) {
+            objective.setCoefficient(x[i], 1.0)
+        }
+        objective.setMinimization()
+
+        val resultStatus = solver.solve()
+        return if (resultStatus == MPSolver.ResultStatus.OPTIMAL) {
+            x.map { it.solutionValue().toInt() }
+        } else {
+            null
+        }
+    }
 
 
-
+    println(
+        "day10_2: ${
+            voltageGoals.mapIndexed { idx, voltage ->
+                solveWithORTools(
+                    toBinaryMatrix(buttonsList[idx], voltage.size),
+                    voltages = voltage,
+                    maxPress = 1000
+                )
+            }.sumOf { it?.sum() ?: 0 }
+        }"
+    )
 
 
 }

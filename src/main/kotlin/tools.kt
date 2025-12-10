@@ -1,3 +1,4 @@
+import java.io.File
 import java.util.*
 
 // scalar multiplication
@@ -24,6 +25,13 @@ fun getTestInput(day: Any): String {
 fun getRealInput(day: Any): String {
     return {}.javaClass.getResource("${day.javaClass.packageName}/inputFiles/${day.javaClass.simpleName.lowercase(Locale.getDefault())}/real")
         ?.readText() ?: "?"
+}
+
+fun readInput(year: String, day: String, type: String): String {
+    val path = "$year/inputFiles/$day/$type"
+    val resource = ClassLoader.getSystemResource(path)
+        ?: error("Resource $path nicht gefunden!")
+    return File(resource.file).readText()
 }
 
 fun Map<Pair<Int, Int>, Char>.getNeighbourPoints(point: Pair<Int, Int>) = listOf(

@@ -1,5 +1,7 @@
 package year2025
 
+import readInput
+
 fun String.isInvalid(): Boolean {
     if (length % 2 == 1) return false
     val midIndex = length / 2
@@ -14,7 +16,7 @@ fun day2() {
 
     println("day2")
 
-    val input = {}.javaClass.getResource("inputFiles/day2/real")?.readText() ?: "?"
+    val input = readInput("2025", "day2", "real")
 
     println(input)
 

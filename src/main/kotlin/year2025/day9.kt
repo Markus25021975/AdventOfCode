@@ -1,11 +1,14 @@
 package year2025
 
+import readInput
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
 fun day9() {
-    val input = {}.javaClass.getResource("inputFiles/day9/real")?.readText() ?: "?"
+    val input = readInput("2025", "day9", "real")
+
+    println(input)
 
     val l1 = input.lines().map { it.split(',').map { it.toInt() } }.map { Pair(it[0], it[1]) }
 

@@ -1,14 +1,16 @@
 package year2025
 
+import readInput
+
 fun day5() {
 
-    val input = {}.javaClass.getResource("inputFiles/day5/real")?.readText() ?: "?"
+    val input = readInput("2025", "day5", "real")
 
     val ranges =
         input.split("\n\n").first().lines().map { it.split('-').map { it.toLong() } }.map { it.first()..it.last() }
     val ids = input.split("\n\n").last().lines().map { it.toLong() }
 
-    println("day5_1 ${ids.count { id -> ranges.any { range -> id in range } }}")
+    println("day5_1  ${ids.count { id -> ranges.any { range -> id in range } }}")
 
     println("day5_2 ${unOverlapRanges(ranges).sumOf { (it.last - it.first + 1) }}")
 

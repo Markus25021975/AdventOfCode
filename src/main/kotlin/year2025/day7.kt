@@ -1,10 +1,9 @@
 package year2025
 
-import kotlin.inc
-import kotlin.text.get
+import readInput
 
 fun day7() {
-    val input = {}.javaClass.getResource("inputFiles/day7/real")?.readText() ?: "?"
+    val input = readInput("2025", "day7", "real")
 
     val matrix = input.lines().toMutableList().map { it.toMutableList() }
     val height = matrix.size
@@ -37,7 +36,7 @@ fun day7() {
         }
     }
 
-    println("day7_1: $splits")
+    println("day7_1:  $splits")
     println("day7_2: ${m2trix.last().sumOf { it }}")
 
 }

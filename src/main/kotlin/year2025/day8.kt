@@ -1,7 +1,9 @@
 package year2025
 
+import readInput
+
 fun day8() {
-    val input = {}.javaClass.getResource("inputFiles/day8/real")?.readText() ?: "?"
+    val input = readInput("2025", "day8", "real")
 
     println(input)
 
@@ -35,7 +37,7 @@ fun day8() {
         }
 
         if (i == 1000) println(
-            "day81_1 ${
+            "day81_1  ${
                 circuits.sortedByDescending { it.size }.take(3).map { it.size }.reduce { acc, i -> acc * i }
             }"
         )

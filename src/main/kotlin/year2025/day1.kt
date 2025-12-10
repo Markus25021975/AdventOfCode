@@ -1,5 +1,6 @@
 package year2025
 
+import readInput
 import kotlin.math.abs
 import kotlin.math.sign
 
@@ -7,7 +8,7 @@ fun day1() {
 
     println("day1")
 
-    val input = {}.javaClass.getResource("inputFiles/day1/real")?.readText() ?: "?"
+    val input = readInput("2025", "day1", "real")
 
     val l = input.lines().map {
         if (it.first() == 'R') {
