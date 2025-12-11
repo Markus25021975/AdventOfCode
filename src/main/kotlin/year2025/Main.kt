@@ -6,6 +6,6 @@ fun main() {
 
     println("Main 2025")
 
-    day11()
+    day12()
 
 }
